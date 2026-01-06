@@ -1,0 +1,29 @@
+PROGRAM LaundryManagementSystem
+BEGIN
+    // Inisialisasi sistem
+    INITIALIZE_SYSTEM()
+    
+    // Loop utama aplikasi
+    WHILE TRUE DO
+        // Tampilkan login screen
+        user = DISPLAY_LOGIN_SCREEN()
+        
+        // Autentikasi pengguna
+        authenticated = AUTHENTICATE_USER(user.username, user.password)
+        
+        IF authenticated THEN
+            // Dapatkan role user
+            user_role = GET_USER_ROLE(user.username)
+            
+            // Redirect ke menu sesuai role
+            CASE user_role OF
+                "ADMIN": ADMIN_MENU(user)
+                "KASIR": KASIR_MENU(user)
+                "STAFF": STAFF_MENU(user)
+                "CUSTOMER": CUSTOMER_MENU(user)
+            ENDCASE
+        ELSE
+            DISPLAY_ERROR("Login gagal! Cek username/password")
+        ENDIF
+    ENDWHILE
+END PROGRAM
